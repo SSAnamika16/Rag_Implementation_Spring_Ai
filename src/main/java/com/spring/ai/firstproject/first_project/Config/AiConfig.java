@@ -32,7 +32,7 @@ public class AiConfig {
                         OllamaChatOptions.builder()
                                 .model("codellama:latest")
                                 .temperature(0.7)
-                                .maxTokens(100)
+//                                .maxTokens(100)
                 )
                 .build();
     }
