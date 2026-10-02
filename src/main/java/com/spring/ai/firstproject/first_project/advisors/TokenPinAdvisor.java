@@ -22,7 +22,6 @@ public class TokenPinAdvisor implements CallAdvisor, StreamAdvisor {
         this.logger.info("Request: " + chatClientRequest.prompt().getContents());
         ChatClientResponse chatClientResponse = callAdvisorChain.nextCall(chatClientRequest);
 
-
         this.logger.info("Token advisor: Response received from the model: ");
         this.logger.info("Response: " + chatClientResponse
                 .chatResponse()

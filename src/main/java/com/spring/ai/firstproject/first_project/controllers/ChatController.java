@@ -8,10 +8,7 @@ import org.springframework.ai.ollama.OllamaChatModel;
 //import org.springframework.ai.openai.OpenAiChatModel;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import reactor.core.publisher.Flux;
 
 import java.util.List;
@@ -29,9 +26,11 @@ public class ChatController {
 
 
     @GetMapping("/chat")
-    public ResponseEntity<String> chat(@RequestParam(value ="q", required = true) String q) {
+    public ResponseEntity<String> chat(
+            @RequestParam(value ="q", required = true) String q,
+            @RequestHeader("userId") String userId) {
 
-        return ResponseEntity.ok(chatService.chatTemplate(q));
+        return ResponseEntity.ok(chatService.chatTemplate(q, userId));
 
     }
 

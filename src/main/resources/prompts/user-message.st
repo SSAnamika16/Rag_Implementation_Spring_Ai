@@ -1,1 +1,2 @@
-Explain the coding concepts. {concept}
+User query:
+{query}
