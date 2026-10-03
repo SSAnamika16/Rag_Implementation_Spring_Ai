@@ -15,6 +15,9 @@ import org.springframework.ai.chat.prompt.PromptTemplate;
 import org.springframework.ai.chat.prompt.SystemPromptTemplate;
 import org.springframework.ai.document.Document;
 import org.springframework.ai.ollama.api.OllamaChatOptions;
+import org.springframework.ai.rag.advisor.RetrievalAugmentationAdvisor;
+import org.springframework.ai.rag.generation.augmentation.ContextualQueryAugmenter;
+import org.springframework.ai.rag.retrieval.search.VectorStoreDocumentRetriever;
 import org.springframework.ai.vectorstore.SearchRequest;
 import org.springframework.ai.vectorstore.VectorStore;
 
@@ -74,23 +77,35 @@ public class ChatServiceImpl implements ChatService {
         // similar result user query
         // pass in context
 
+        //SIMPLE RAG
+
+        var advisors = RetrievalAugmentationAdvisor.builder()
+                .documentRetriever(VectorStoreDocumentRetriever
+                        .builder()
+                        .vectorStore(this.vectorStore)
+                        .topK(3)
+                        .similarityThreshold(0.5)
+                        .build())
+                .queryAugmenter(ContextualQueryAugmenter.builder().allowEmptyContext(true).build())
+                .build();
 
 
         return this.chatClient
                 .prompt()
                 .advisors(advisorSpec -> advisorSpec.param(ChatMemory.CONVERSATION_ID, userId))
+                .advisors(advisors)
 //                .system(system ->
 //                        system.text(this.systemMessage).param("documents", contextData))
 
 //                .advisors(QuestionAnswerAdvisor.builder(vectorStore).build())
-                .advisors(
-                        QuestionAnswerAdvisor
-                                .builder(vectorStore)
-                                .searchRequest(SearchRequest.builder()
-                                        .topK(3)
-                                        .similarityThreshold(0.5)
-                                        .build()).build()
-                )
+//                .advisors(
+//                        QuestionAnswerAdvisor
+//                                .builder(vectorStore)
+//                                .searchRequest(SearchRequest.builder()
+//                                        .topK(3)
+//                                        .similarityThreshold(0.5)
+//                                        .build()).build()
+//                )
                 .user(user ->
                         user.text(this.userMessage).param("query", query))
 
