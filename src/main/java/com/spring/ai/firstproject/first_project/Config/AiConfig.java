@@ -29,35 +29,13 @@ import java.util.List;
 public class AiConfig {
 
 
-//    @Bean
-//    public ChatMemory chatMemory(JdbcChatMemoryRepository jdbcChatMemoryRepository) {
-//
-//        return MessageWindowChatMemory.builder()
-//                .chatMemoryRepository(jdbcChatMemoryRepository)
-//                .maxMessages(10)
-//                .build();
-//    }
-
-
-   @Bean
-   public ChatMemory chatMemory() {
-       InMemoryChatMemoryRepository inMemoryChatMemoryRepository = new InMemoryChatMemoryRepository();
-       return MessageWindowChatMemory.builder().maxMessages(10).chatMemoryRepository(inMemoryChatMemoryRepository).build();
-   }
-
-
     private Logger logger = LoggerFactory.getLogger(AiConfig.class);
 
     @Bean
-    public ChatClient chatClient(ChatClient.Builder builder, ChatMemory chatMemory) {
-
-
-        this.logger.info("ChatMemoryImplementation class: " + chatMemory.getClass().getName());
-
-        MessageChatMemoryAdvisor messageChatMemoryAdvisor = MessageChatMemoryAdvisor.builder(chatMemory).build();
+    public ChatClient chatClient(ChatClient.Builder builder) {
 
         return builder
-                .defaultAdvisors(messageChatMemoryAdvisor, new TokenPinAdvisor(), new SimpleLoggerAdvisor(), new SafeGuardAdvisor(List.of("games")))
+                .defaultAdvisors(new TokenPinAdvisor(), new SimpleLoggerAdvisor(), new SafeGuardAdvisor(List.of("games")))
 //                .defaultSystem("You are a helpful coding assistant. You are an expert in coding.")
                 .defaultOptions(
                         OllamaChatOptions.builder()
@@ -69,15 +47,5 @@ public class AiConfig {
     }
 
 
-
-//    @Bean(name = "openAiChatClient")
-//    public ChatClient openAiChatModel(OpenAiChatModel chatModel) {
-//        return ChatClient.builder(chatModel).build();
-//    }
-//
-//    @Bean(name = "ollamaChatClient")
-//    public ChatClient ollamaChatModel(OllamaChatModel chatModel) {
-//        return ChatClient.builder(chatModel).build();
-//    }
 
 }

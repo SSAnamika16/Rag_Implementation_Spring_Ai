@@ -1,0 +1,21 @@
+{
+  "project": "Sample JSON with Dates",
+  "created_on": "2026-10-05 12:40:00",
+  "events": [
+    {
+      "id": 1,
+      "name": "Project Kickoff",
+      "date": "2026-10-08"
+    },
+    {
+      "id": 2,
+      "name": "First Milestone",
+      "date": "2026-10-08"
+    },
+    {
+      "id": 3,
+      "name": "Final Review",
+      "date": "2026-10-08"
+    }
+  ]
+}

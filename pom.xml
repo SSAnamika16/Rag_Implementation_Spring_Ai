@@ -8,10 +8,10 @@
 		<version>4.1.1</version>
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
-	<groupId>com.spring.ai.firstproject</groupId>
-	<artifactId>memory_app</artifactId>
+	<groupId>com.spring.ai.advancerag</groupId>
+	<artifactId>advance_rag</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>memory_vector</name>
+	<name>advance_rag</name>
 	<description/>
 	<url/>
 	<licenses>
@@ -70,6 +70,12 @@
             <groupId>org.springframework.ai</groupId>
             <artifactId>spring-ai-rag</artifactId>
         </dependency>
+
+        <dependency>
+            <groupId>org.springframework.ai</groupId>
+            <artifactId>spring-ai-pdf-document-reader</artifactId>
+        </dependency>
+
 
         <dependency>
             <groupId>org.mariadb.jdbc</groupId>
@@ -153,7 +159,11 @@
 						</configuration>
 					</execution>
 				</executions>
-			</plugin>
+                <configuration>
+                    <source>25</source>
+                    <target>25</target>
+                </configuration>
+            </plugin>
 		</plugins>
 	</build>
 
